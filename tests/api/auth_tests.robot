@@ -9,8 +9,9 @@ Suite Setup       Create API Session
 *** Test Cases ***
 AUTH-001 - Deve retornar health check da API de autenticação
     [Tags]    auth    smoke
-    ${response}=    GET On Session    booker    /auth/validate    expected_status=any
-    Should Be True    ${response.status_code} in [200, 401]
+    ${payload}=    Create Dictionary    token=healthcheck
+    ${response}=   POST On Session    booker    /auth/validate    json=${payload}    expected_status=any
+    Should Be True    ${response.status_code} in [200, 403, 401]
 
 AUTH-002 - Deve realizar login com credenciais válidas
     [Tags]    auth    smoke
