@@ -12,9 +12,9 @@ Create Booking
     ${headers}=     Create Dictionary    Content-Type=application/json    Accept=application/json
     ${response}=    POST On Session    booker    /booking/
     ...             json=${payload}    headers=${headers}    expected_status=any
-    [Return]        ${response}
+    RETURN        ${response}
 
 Get Booking By Id
     [Arguments]     ${booking_id}
     ${response}=    GET On Session    booker    /booking/${booking_id}    expected_status=any
-    [Return]        ${response}
+    RETURN        ${response}
