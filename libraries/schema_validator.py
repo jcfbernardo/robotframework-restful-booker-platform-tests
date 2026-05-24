@@ -1,5 +1,4 @@
 import jsonschema
-from robot.api.deco import keyword
 
 
 class SchemaValidator:
@@ -41,10 +40,8 @@ class SchemaValidator:
         },
     }
 
-    @keyword("Validate Booking Response Schema")
     def validate_booking_response_schema(self, response_dict):
         jsonschema.validate(instance=response_dict, schema=self.BOOKING_SCHEMA)
 
-    @keyword("Validate Room List Response Schema")
     def validate_room_list_response_schema(self, response_dict):
         jsonschema.validate(instance=response_dict, schema=self.ROOM_LIST_SCHEMA)
