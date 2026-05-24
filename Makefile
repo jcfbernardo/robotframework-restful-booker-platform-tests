@@ -3,7 +3,7 @@ RESULTS_DIR := results
 .PHONY: setup init test test-api test-ui smoke regression negative e2e clean
 
 setup:
-	python -m venv .venv
+	python3 -m venv .venv
 	.venv/bin/pip install -r requirements.txt
 
 init:
