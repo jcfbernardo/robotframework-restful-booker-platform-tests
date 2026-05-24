@@ -3,7 +3,7 @@ Documentation    Global variables for the Restful Booker Platform test suite.
 
 *** Variables ***
 ${BASE_URL}           https://www.automationintesting.online
-${API_BASE_URL}       https://automationintesting.online
+${API_BASE_URL}       https://automationintesting.online/api
 ${ADMIN_USER}         admin
 ${ADMIN_PASS}         password
 ${BROWSER}            chromium
