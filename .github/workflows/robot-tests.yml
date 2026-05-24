@@ -1,0 +1,67 @@
+name: Robot Framework Tests
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  robot-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Cache pip dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+          rfbrowser init
+
+      - name: Run API tests
+        run: |
+          robot --outputdir results/api \
+                --output api_output.xml \
+                --log api_log.html \
+                --report api_report.html \
+                tests/api
+
+      - name: Run UI tests
+        run: |
+          robot --outputdir results/ui \
+                --output ui_output.xml \
+                --log ui_log.html \
+                --report ui_report.html \
+                tests/ui
+
+      - name: Merge results
+        if: always()
+        run: |
+          rebot --outputdir results \
+                --output output.xml \
+                --log log.html \
+                --report report.html \
+                results/api/api_output.xml results/ui/ui_output.xml
+
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: robot-results-${{ github.run_number }}
+          path: results/
+          retention-days: 30
