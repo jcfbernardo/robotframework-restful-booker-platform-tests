@@ -14,6 +14,7 @@ Get Auth Token
     Should Be Equal As Integers    ${response.status_code}    200
     ${body}=       Set Variable    ${response.json()}
     ${token}=      Get From Dictionary    ${body}    token
+    Add Cookie To Session    booker    token    ${token}
     RETURN         ${token}
 
 Login With Credentials
