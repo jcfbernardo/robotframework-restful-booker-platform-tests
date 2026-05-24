@@ -15,6 +15,7 @@ Create Booking
     RETURN        ${response}
 
 Get Booking By Id
-    [Arguments]     ${booking_id}
-    ${response}=    GET On Session    booker    /booking/${booking_id}    expected_status=any
+    [Arguments]     ${booking_id}    ${token}=${EMPTY}
+    ${cookies}=     Create Dictionary    token=${token}
+    ${response}=    GET On Session    booker    /booking/${booking_id}    cookies=${cookies}    expected_status=any
     RETURN        ${response}

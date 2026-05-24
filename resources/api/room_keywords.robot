@@ -13,8 +13,9 @@ Get All Rooms
 
 Create Room With Token
     [Arguments]     ${token}    ${payload}
+    ${cookies}=     Create Dictionary    token=${token}
     ${response}=    POST On Session    booker    /room
-    ...             json=${payload}    expected_status=any
+    ...             json=${payload}    cookies=${cookies}    expected_status=any
     RETURN          ${response}
 
 Create Room Without Token

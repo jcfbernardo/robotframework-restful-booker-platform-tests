@@ -6,7 +6,7 @@ fake = Faker()
 
 
 def generate_booking_payload(roomid):
-    checkin = datetime.date.today() + datetime.timedelta(days=random.randint(1, 30))
+    checkin = datetime.date.today() + datetime.timedelta(days=random.randint(365, 730))
     checkout = checkin + datetime.timedelta(days=random.randint(1, 7))
     return {
         "roomid": int(roomid),

@@ -9,11 +9,13 @@ Resource          ../../resources/api/auth_keywords.robot
 Resource          ../../resources/api/booking_keywords.robot
 Suite Setup       Run Keywords
 ...               Create API Session    AND
-...               Acquire First Available Room Id
+...               Acquire First Available Room Id    AND
+...               Authenticate And Store Token
 
 *** Variables ***
 ${ROOM_ID}              1
 ${CREATED_BOOKING_ID}   ${EMPTY}
+${AUTH_TOKEN}           ${EMPTY}
 
 *** Keywords ***
 Acquire First Available Room Id
@@ -23,6 +25,10 @@ Acquire First Available Room Id
     ${first_room}=  Get From List    ${rooms}    0
     ${rid}=         Get From Dictionary    ${first_room}    roomid
     Set Suite Variable    ${ROOM_ID}    ${rid}
+
+Authenticate And Store Token
+    ${token}=    Get Auth Token
+    Set Suite Variable    ${AUTH_TOKEN}    ${token}
 
 *** Test Cases ***
 BOOKING-001 - Deve criar booking com dados válidos
@@ -36,7 +42,7 @@ BOOKING-001 - Deve criar booking com dados válidos
 
 BOOKING-002 - Deve consultar booking criado
     [Tags]    booking    regression
-    ${response}=    Get Booking By Id    ${CREATED_BOOKING_ID}
+    ${response}=    Get Booking By Id    ${CREATED_BOOKING_ID}    ${AUTH_TOKEN}
     Should Be Equal As Integers    ${response.status_code}    200
     ${body}=        Set Variable    ${response.json()}
     Dictionary Should Contain Key    ${body}    firstname

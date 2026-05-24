@@ -2,21 +2,15 @@ import jsonschema
 
 BOOKING_SCHEMA = {
     "type": "object",
-    "required": ["bookingid", "booking"],
+    "required": ["bookingid", "firstname", "lastname", "depositpaid", "bookingdates"],
     "properties": {
         "bookingid": {"type": "integer"},
-        "booking": {
+        "firstname": {"type": "string"},
+        "lastname": {"type": "string"},
+        "depositpaid": {"type": "boolean"},
+        "bookingdates": {
             "type": "object",
-            "required": ["firstname", "lastname", "depositpaid", "bookingdates"],
-            "properties": {
-                "firstname": {"type": "string"},
-                "lastname": {"type": "string"},
-                "depositpaid": {"type": "boolean"},
-                "bookingdates": {
-                    "type": "object",
-                    "required": ["checkin", "checkout"],
-                },
-            },
+            "required": ["checkin", "checkout"],
         },
     },
 }
