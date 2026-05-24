@@ -14,11 +14,11 @@ Get Auth Token
     Should Be Equal As Integers    ${response.status_code}    200
     ${body}=       Set Variable    ${response.json()}
     ${token}=      Get From Dictionary    ${body}    token
-    [Return]       ${token}
+    RETURN         ${token}
 
 Login With Credentials
     [Arguments]    ${username}    ${password}
     ${payload}=    Create Dictionary    username=${username}    password=${password}
     ${response}=   POST On Session    booker    /auth/login    json=${payload}
     ...            expected_status=any
-    [Return]       ${response}
+    RETURN         ${response}
